@@ -22,7 +22,7 @@ Write docs to `mkdocs/docs`.
 Start container with docker-compose:
 
 ```
-docker-compose -f docker-compose-dev.yml up
+docker-compose up
 ```
 
 Open startpage in browser: [http://0.0.0.0:8080](http://0.0.0.0:8080). You can live edit.
