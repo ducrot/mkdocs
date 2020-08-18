@@ -6,7 +6,7 @@ using [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/getting-
 ## Installation
 
 ```
-git clone git@git.ducrot.de:websolutions/mkdocs.git my-documentation
+git clone https://github.com/ducrot/mkdocs.git my-documentation
 cd my-documentation
 rm -rf .git
 git init
