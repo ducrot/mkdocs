@@ -1,6 +1,6 @@
 # MkDocs Documentation
 
-The documentation is built with [MkDocs](https://www.mkdocs.org/) 
+A Docker container to build documentations with [MkDocs](https://www.mkdocs.org/) 
 using [Material for MkDocs](https://squidfunk.github.io/mkdocs-material/getting-started/) theme.
 
 ## Installation
