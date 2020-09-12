@@ -12,7 +12,7 @@ rm -rf .git
 git init
 git add .
 git commit -m "Initial commit"
-docker-compose up -d
+docker-compose build
 ```
 
 ## Usage
@@ -22,7 +22,7 @@ Write docs to `mkdocs/docs`.
 Start container with docker-compose:
 
 ```
-docker-compose up
+docker-compose run docs mkdocs serve
 ```
 
 Open startpage in browser: [http://0.0.0.0:8080](http://0.0.0.0:8080). You can live edit.
@@ -33,7 +33,7 @@ Open startpage in browser: [http://0.0.0.0:8080](http://0.0.0.0:8080). You can l
 For production run build with docker-compose:
 
 ```
-docker-compose exec docs mkdocs build
+docker-compose run mkdocs build
 ```
 
 and deploy `mkdocs/site/*` to a webserver.
