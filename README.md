@@ -33,7 +33,7 @@ Open startpage in browser: [http://0.0.0.0:8080](http://0.0.0.0:8080). You can l
 For production run build with docker-compose:
 
 ```
-docker-compose run mkdocs build
+docker-compose run docs mkdocs build
 ```
 
 and deploy `mkdocs/site/*` to a webserver.
