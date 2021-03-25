@@ -1,9 +1,33 @@
 version: "3.7"
 services:
-    docs:
-        build:
-            context: .
-        ports:
-            - 8080:8080
-        volumes:
-            - ./mkdocs/:/mkdocs
+  docs-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.Prod
+    networks:
+      - traefik_proxy
+    restart: unless-stopped
+    labels:
+      ## traefik basic config
+      - "traefik.enable=true"
+      - "traefik.http.routers.docs-prod.rule=(Host(`mydomain.tld`) && PathPrefix(`/docs`)) || (Host(`mydomain.test`) && PathPrefix(`/docs`))"
+      ### set tls
+      - "traefik.http.routers.docs-prod.tls=true"
+      - "traefik.http.routers.docs-prod.tls.certresolver=le"
+      ### strip prefix and add missing trailing slash
+      - "traefik.http.middlewares.docs-prod-stripprefix.chain.middlewares=docs-prod-stripprefix-1,docs-prod-stripprefix-2"
+      - "traefik.http.middlewares.docs-prod-stripprefix-1.redirectregex.regex=^(https?://[^/]+/[a-z0-9_]+)$$"
+      - "traefik.http.middlewares.docs-prod-stripprefix-1.redirectregex.replacement=$${1}/"
+      - "traefik.http.middlewares.docs-prod-stripprefix-1.redirectregex.permanent=true"
+      - "traefik.http.middlewares.docs-prod-stripprefix-2.stripprefixregex.regex=/[a-z0-9_]+"
+      ### basic auth
+      # Note: when used in docker-compose.yml all dollar signs in the hash need to be doubled for escaping.
+      # To create user:password pair, it's possible to use this command:
+      # echo $(htpasswd -nB user) | sed -e s/\\$/\\$\\$/g
+      - "traefik.http.middlewares.docs-prod-basic-auth.basicauth.users=user:$$2y$$05$$ruGI.Haez/QvDIPsQ4zzz.rNowaU1Gc05rhR3jfkzzWp01L.EL4GO"
+      #### middlewares
+      - "traefik.http.routers.docs-prod.middlewares=docs-prod-stripprefix,docs-prod-basic-auth"
+
+networks:
+  traefik_proxy:
+    external: true

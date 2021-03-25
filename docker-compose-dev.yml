@@ -1,0 +1,10 @@
+version: "3.7"
+services:
+  docs-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile.Dev
+    ports:
+      - 8080:8080
+    volumes:
+      - ./mkdocs/:/mkdocs
